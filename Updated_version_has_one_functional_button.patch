@@ -1,0 +1,96 @@
+Index: app/src/main/java/com/example/uarmbt/step1Activity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/uarmbt/step1Activity.java	(revision 45310f6470ea9037733d49ebab8b6307d4db9ae0)
++++ app/src/main/java/com/example/uarmbt/step1Activity.java	(date 1553024957000)
+@@ -27,7 +27,7 @@
+ 
+ public class step1Activity extends AppCompatActivity implements BluetoothSerialListener, BluetoothDeviceListDialog.OnDeviceSelectedListener {
+ 
+-    private TextView textView;
++    private TextView textView, texView2;
+     private BluetoothSerial bluetoothSerial;
+     private Button button;
+ 
+@@ -46,14 +46,20 @@
+ 
+         bluetoothSerial = new BluetoothSerial(this, this);
+ 
++
+         button = findViewById(R.id.button_step1);
++
+         button.setOnClickListener(new View.OnClickListener() {
+             public void onClick(View v) {
+-
+-        onBluetoothSerialWrite(String.valueOf(2));
++            onBluetoothSerialWrite(String.valueOf(2));
++
++            textView =findViewById(R.id.textView2);
++
++
+             }
+ 
+         });
++
+ 
+ 
+     }
+@@ -238,9 +244,7 @@
+     @Override
+     public void onBluetoothSerialRead(String message) {
+         // Print the incoming message on the terminal screen
+-        textView.append(getString(R.string.terminal_message_template,
+-                bluetoothSerial.getConnectedDeviceName(),
+-                message));
++        textView.append(message);
+ 
+         //svTerminal.post(scrollTerminalToBottom);
+     }
+Index: app/src/main/res/layout/content_step1.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/content_step1.xml	(revision 45310f6470ea9037733d49ebab8b6307d4db9ae0)
++++ app/src/main/res/layout/content_step1.xml	(date 1553028175000)
+@@ -76,8 +76,10 @@
+         android:layout_marginBottom="8dp"
+         app:layout_constraintBottom_toBottomOf="parent"
+         app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintHorizontal_bias="0.498"
+         app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="@+id/guideline3" />
++        app:layout_constraintTop_toTopOf="@+id/guideline3"
++        app:layout_constraintVertical_bias="0.865" />
+ 
+     <android.support.constraint.Guideline
+         android:id="@+id/guideline3"
+@@ -101,4 +103,25 @@
+         app:layout_constraintEnd_toEndOf="parent"
+         app:layout_constraintStart_toStartOf="parent"
+         app:layout_constraintTop_toBottomOf="@+id/textView_relax" />
++
++    <TextView
++        android:id="@+id/textView2"
++        android:layout_width="391dp"
++        android:layout_height="124dp"
++        android:layout_marginStart="8dp"
++        android:layout_marginLeft="8dp"
++        android:layout_marginTop="8dp"
++        android:layout_marginEnd="8dp"
++        android:layout_marginRight="8dp"
++        android:layout_marginBottom="40dp"
++        android:fontFamily="sans-serif-medium"
++        android:gravity="center"
++        android:text="Status:  "
++        android:textColor="#fff"
++        android:textSize="25dp"
++        app:layout_constraintBottom_toTopOf="@+id/indeterminateBar"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="@+id/guideline3"
++        app:layout_constraintVertical_bias="0.069" />
+ </android.support.constraint.ConstraintLayout>
+\ No newline at end of file
