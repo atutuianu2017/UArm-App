@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".step1Activity"
-    android:background="@drawable/backg1"
+    android:background="@drawable/backf"
     tools:showIn="@layout/activity_step1">
 
     <ImageView
@@ -87,10 +87,6 @@
         app:layout_constraintVertical_bias="0.255" />
 
 
-
-
-
-
     <TextView
         android:id="@+id/textView_step1"
         android:layout_width="wrap_content"
@@ -121,7 +117,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="48dp"
+        android:layout_marginBottom="80dp"
         android:text="Press the button below to start the calibration process"
         android:textAlignment="center"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
@@ -277,7 +273,7 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone"
         android:buttonTint="@color/primaryDarkColor"
-        android:text="Sensor 1 calibration "
+        android:text="Sensor 2 calibration "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.456"

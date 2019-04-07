@@ -87,7 +87,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:textSize="16dp"
+        android:textSize="18dp"
         android:text="Setup"
         app:layout_constraintBottom_toTopOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,8 +97,8 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="309dp"
-        android:layout_height="81dp"
+        android:layout_width="315dp"
+        android:layout_height="85dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"

@@ -24,5 +24,5 @@
     <string name="title_step3">Step 3</string>
     <string name="content_step3">Please flex your biceps muscles as shown above</string>
     <string name="title_finished">Calibration completed</string>
-    <string name="content_finished">You can use your arm now</string>
+    <string name="content_finished">You can use your UArm now!</string>
 </resources>
