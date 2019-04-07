@@ -10,8 +10,7 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textView_welcome, textView_UArm, textView_project;
-    private ImageView imageView2, imageView3;
+    private ImageView imageView4, imageView5;
 
 
     @Override
@@ -19,18 +18,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView_welcome =(TextView)findViewById(R.id.textView_welcome);
-        textView_UArm=(TextView)findViewById(R.id.textView_UArm);
-        textView_project=(TextView)findViewById(R.id.textView_project);
-        imageView2=(ImageView) findViewById(R.id.imageView2);
-        imageView3=(ImageView) findViewById(R.id.imageView3);
+        imageView5=(ImageView) findViewById(R.id.imageView5);
+        imageView4=(ImageView) findViewById(R.id.imageView4);
         Animation myanim = AnimationUtils.loadAnimation(this, R.anim.mytransition);
-        textView_welcome.startAnimation(myanim);
-        textView_UArm.startAnimation(myanim);
-        textView_project.startAnimation(myanim);
-        imageView2.startAnimation(myanim);
-        imageView3.startAnimation(myanim);
 
+        imageView4.startAnimation(myanim);
+        imageView5.startAnimation(myanim);
         final Intent i = new Intent(this, start_calibration.class);
 
 
@@ -38,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         Thread timer = new Thread(){
             public void run(){
                 try{
-                    sleep(2700);
+                    sleep(7000);
                 } catch (InterruptedException e){
                     e.printStackTrace();
                 }

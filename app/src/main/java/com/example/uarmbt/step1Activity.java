@@ -2,6 +2,7 @@ package com.example.uarmbt;
 
 import android.app.Activity;
 import android.content.*;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import android.os.Handler;
@@ -10,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.view.MenuItem;
 import android.view.Menu;
@@ -25,6 +28,7 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.os.CountDownTimer;
 import pl.droidsonroids.gif.GifImageView;
+
 
 
 
@@ -44,6 +48,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
     MyCountDownTimer myCountDownTimer;
     String data;
 
+
     private final static int REQUEST_ENABLE_BLUETOOTH = 1; // used to identify adding bluetooth names
 
     private MenuItem actionConnect, actionDisconnect;
@@ -56,12 +61,15 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
         setContentView(R.layout.activity_step1);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //animate transitions
+
 
         bluetoothSerial = new BluetoothSerial(this, this);
         imageView = findViewById(R.id.imageView_step1);
         textViewTitle = findViewById(R.id.textView_step1);
         textViewContent = findViewById(R.id.textView_relax);
         button = findViewById(R.id.button_step1);
+
 
 
     }
@@ -209,17 +217,23 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
     public class MyCountDownTimer extends CountDownTimer {
 
 
+        //animated gifs
         GifImageView gesture1=(GifImageView) findViewById(R.id.lowerarm);
         GifImageView gesture2=(GifImageView) findViewById(R.id.upperarm);
         GifImageView gesture3=(GifImageView) findViewById(R.id.bicepscali);
+
+        //progress bars
         ProgressBar progressBar11=(ProgressBar) findViewById(R.id.progressBar1);
         ProgressBar progressBar2=(ProgressBar) findViewById(R.id.progressBar2);
         ProgressBar progressBar3=(ProgressBar) findViewById(R.id.progressBar3);
 
-
+        //checkbook buttons
         CheckBox checkBox1=(CheckBox) findViewById(R.id.checkBox1);
         CheckBox checkBox2=(CheckBox) findViewById(R.id.checkBox2);
         CheckBox checkBox3=(CheckBox) findViewById(R.id.checkBox3);
+
+
+
 
 
         public MyCountDownTimer(long millisInFuture, long countDownInterval) {
@@ -229,8 +243,11 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
         @Override
         public void onTick(long millisUntilFinished) {
 
+
+
             int progress = (int) (millisUntilFinished/30000);
             if(progress == 2) {
+                textViewTitle.setTextColor(Color.parseColor("#FFAF021C"));
                 gesture1.setVisibility(View.VISIBLE);
                 progressBar11.setVisibility(View.VISIBLE);
                 textViewTitle.setText(R.string.title_step1);
@@ -248,6 +265,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
                 progressBar2.setVisibility(View.VISIBLE);
                 checkBox2.setVisibility(View.VISIBLE);
                 gesture2.setVisibility(View.VISIBLE);
+                textViewTitle.setTextColor(Color.parseColor("#FF25A22B"));
                 textViewTitle.setText(R.string.title_step2);
                 textViewContent.setText(R.string.content_step2);
             }
@@ -262,6 +280,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
                 progressBar2.setVisibility(View.GONE);
                 progressBar3.setVisibility(View.VISIBLE);
                 checkBox3.setVisibility(View.VISIBLE);
+                textViewTitle.setTextColor(Color.parseColor("#FFFFCC33"));
                 textViewTitle.setText(R.string.title_step3);
                 textViewContent.setText(R.string.content_step3);
             }
@@ -274,7 +293,8 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
             gesture3.setVisibility(View.GONE);
             progressBar3.setVisibility(View.GONE);
             checkBox3.setChecked(true);
-            imageView.setImageResource(R.drawable.arm_relax);
+            imageView.setImageResource(R.drawable.robotblue);
+            textViewTitle.setTextColor(Color.parseColor("#03b9ff"));
             textViewTitle.setText(R.string.title_finished);
             textViewContent.setText(R.string.content_finished);
         }
