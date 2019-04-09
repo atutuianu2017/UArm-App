@@ -273,7 +273,7 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone"
         android:buttonTint="@color/primaryDarkColor"
-        android:text="Sensor 2 calibration "
+        android:text="Sensor 3 calibration "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.456"
