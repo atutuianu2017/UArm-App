@@ -106,7 +106,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
-        android:text="Make sure the the moyware sensors are placed in the fallowing positions before start calibration"
+        android:text="Make sure the MoyWare sensors are placed in the following positions before starting the calibration"
         android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

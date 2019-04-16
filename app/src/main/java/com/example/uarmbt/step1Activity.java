@@ -93,7 +93,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Context context = getApplicationContext();
-                CharSequence text = "Connect your device with the UArm via bluetooth before starting the calibration process!";
+                CharSequence text = "Connect your device with the UArm via Bluetooth before starting the calibration process!";
                 int duration = Toast.LENGTH_LONG;
 
                 if (bluetoothSerial.isConnected()){
