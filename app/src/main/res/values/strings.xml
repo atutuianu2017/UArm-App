@@ -25,4 +25,6 @@
     <string name="content_step3">Please flex your biceps muscles as shown above</string>
     <string name="title_finished">Calibration completed</string>
     <string name="content_finished">You can use your UArm now!</string>
+    <string name="title_fail">Error</string>
+    <string name="content_fail">Calibration was unsuccessful. Please click below to try again.</string>
 </resources>

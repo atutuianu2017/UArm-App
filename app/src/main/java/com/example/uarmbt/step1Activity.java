@@ -40,7 +40,7 @@ import com.macroyau.blue2serial.BluetoothSerialListener;
 
 public class step1Activity extends AppCompatActivity implements BluetoothSerialListener, BluetoothDeviceListDialog.OnDeviceSelectedListener {
 
-    private TextView textViewTitle, textViewContent, textView;
+    private TextView textViewTitle, textViewContent, textViewHidden;
     private BluetoothSerial bluetoothSerial;
     private Button button;
     private ImageView imageView;
@@ -69,6 +69,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
         textViewTitle = findViewById(R.id.textView_step1);
         textViewContent = findViewById(R.id.textView_relax);
         button = findViewById(R.id.button_step1);
+        textViewHidden = findViewById(R.id.textViewHidden);
 
 
 
@@ -81,14 +82,14 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
 
         // Check Bluetooth availability on the device and set up the Bluetooth adapter
         bluetoothSerial.setup();
-        myCountDownTimer = new MyCountDownTimer(90000, 30000);
+        myCountDownTimer = new MyCountDownTimer(60000, 20000);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        myCountDownTimer = new MyCountDownTimer(90000, 30000);
+        myCountDownTimer = new MyCountDownTimer(60000, 20000);
 
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -235,7 +236,6 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
 
 
 
-
         public MyCountDownTimer(long millisInFuture, long countDownInterval) {
             super(millisInFuture, countDownInterval);
         }
@@ -245,7 +245,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
 
 
 
-            int progress = (int) (millisUntilFinished/30000);
+            int progress = (int) (millisUntilFinished/20000);
             if(progress == 2) {
                 textViewTitle.setTextColor(Color.parseColor("#FFAF021C"));
                 gesture1.setVisibility(View.VISIBLE);
@@ -290,6 +290,8 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
         @Override
         public void onFinish() {
             //finish();
+            data = "<4>";
+            bluetoothSerial.write(data);
             gesture3.setVisibility(View.GONE);
             progressBar3.setVisibility(View.GONE);
             checkBox3.setChecked(true);
@@ -297,6 +299,32 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
             textViewTitle.setTextColor(Color.parseColor("#03b9ff"));
             textViewTitle.setText(R.string.title_finished);
             textViewContent.setText(R.string.content_finished);
+           /* new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    String message = textViewHidden.getText().toString();
+
+                    if(message == "S") {
+                        data = "<"+message+">";
+                        bluetoothSerial.write(data);
+                        imageView.setImageResource(R.drawable.robotblue);
+                        textViewTitle.setTextColor(Color.parseColor("#03b9ff"));
+                        textViewTitle.setText(R.string.title_finished);
+                        textViewContent.setText(R.string.content_finished);
+                    }
+                    else if(message == "F") {
+                        imageView.setImageResource(R.drawable.robotblue);
+                        textViewTitle.setTextColor(Color.parseColor("#03b9ff"));
+                        textViewTitle.setText(R.string.title_fail);
+                        textViewContent.setText(R.string.content_fail);
+                        checkBox1.setVisibility(View.GONE);
+                        checkBox2.setVisibility(View.GONE);
+                        checkBox3.setVisibility(View.GONE);
+                        button.setText("Restart Calibration");
+                        button.setVisibility(View.VISIBLE);
+
+                    }                }
+            }, 2000); // Millisecond 1000 = 1 sec*/
         }
     }
 
@@ -379,7 +407,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
     @Override
     public void onBluetoothSerialRead(String message) {
         // Print the incoming message on the terminal screen
-        textView.append(message);
+        textViewHidden.setText(message);
 
 
         //svTerminal.post(scrollTerminalToBottom);

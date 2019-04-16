@@ -1,5 +1,6 @@
 package com.example.uarmbt;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,13 +15,14 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.util.Pair;
 
 
 
 public class start_calibration extends AppCompatActivity {
 
     private ImageView image1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +32,37 @@ public class start_calibration extends AppCompatActivity {
         setSupportActionBar(toolbar);
         final ImageButton imageButton =findViewById(R.id.button_calibration1);
 
-        image1 =findViewById(R.id.imageView2);
-        final Animation myanim1 = AnimationUtils.loadAnimation(this, R.anim.alpha);
+
+        image1 =findViewById(R.id.imageView6);
+        final Animation myanim1 = AnimationUtils.loadAnimation(this, R.anim.fadein);
         image1.startAnimation(myanim1);
+        final Animation btnAnimation = AnimationUtils.loadAnimation(this,R.anim.alpha);
+
 
 
         imageButton.postDelayed(new Runnable() {
             public void run() {
                 imageButton.setVisibility(View.VISIBLE);
+                imageButton.startAnimation(btnAnimation);
+
+
             }
-        }, 4000);
+        }, 1000);
 
         //capture button click
         imageButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View arg0) {
+            public void onClick(View view) {
 
-                imageButton.startAnimation(myanim1);
                 // Start Main4Activity.class
                 Intent myIntent = new Intent(start_calibration.this,
                         step1Activity.class);
+
+                Pair[] pairs = new Pair[2];
+                pairs[0] = new Pair<View, String> (image1, "firstTransition");
+                pairs[1] = new Pair<View, String> (imageButton, "secondTransition");
+
+                ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(start_calibration.this, pairs);
+
                 startActivity(myIntent);
             }
         });
