@@ -71,8 +71,6 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
         button = findViewById(R.id.button_step1);
         textViewHidden = findViewById(R.id.textViewHidden);
 
-
-
     }
 
 
@@ -134,6 +132,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
 
         // Disconnect from the remote device and close the serial port
         bluetoothSerial.stop();
+        //stop timer
         myCountDownTimer.cancel();
 
     }
@@ -141,6 +140,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
     @Override
     protected void onPause() {
         super.onPause();
+        //stop timer
         myCountDownTimer.cancel();
     }
 
@@ -170,7 +170,6 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
                 return true;
 
             case R.id.action_overflow:
-                //onBluetoothSerialWrite(String.valueOf(2));
 
                 return true;
 
@@ -242,9 +241,7 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
 
         @Override
         public void onTick(long millisUntilFinished) {
-
-
-
+            //every 20 second the timer will send to the Arduino a message to calibrate a certain sensor
             int progress = (int) (millisUntilFinished/20000);
             if(progress == 2) {
                 textViewTitle.setTextColor(Color.parseColor("#FFAF021C"));
@@ -253,8 +250,6 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
                 textViewTitle.setText(R.string.title_step1);
                 textViewContent.setText(R.string.content_step1);
                 checkBox1.setVisibility(View.VISIBLE);
-
-
             }
             else if (progress == 1) {
                 data = "<2>";
@@ -269,9 +264,8 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
                 textViewTitle.setText(R.string.title_step2);
                 textViewContent.setText(R.string.content_step2);
             }
-            else if (progress == 0) //maybe check if zero
+            else if (progress == 0)
             {
-                //display an image of finalization
                 data = "<3>";
                 bluetoothSerial.write(data);
                 gesture2.setVisibility(View.GONE);
@@ -292,27 +286,30 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
             //finish();
             data = "<4>";
             bluetoothSerial.write(data);
-            gesture3.setVisibility(View.GONE);
-            progressBar3.setVisibility(View.GONE);
-            checkBox3.setChecked(true);
-            imageView.setImageResource(R.drawable.robotblue);
-            textViewTitle.setTextColor(Color.parseColor("#03b9ff"));
-            textViewTitle.setText(R.string.title_finished);
-            textViewContent.setText(R.string.content_finished);
-           /* new Handler().postDelayed(new Runnable() {
+            new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
+                    //read message received from Arduino
+                    //S means successful calibration
+                    //F means unsuccessful calibration
                     String message = textViewHidden.getText().toString();
-
-                    if(message == "S") {
-                        data = "<"+message+">";
-                        bluetoothSerial.write(data);
+                    if(message.equals("S")) {
+                        gesture3.setVisibility(View.GONE);
+                        progressBar3.setVisibility(View.GONE);
+                        checkBox3.setChecked(true);
                         imageView.setImageResource(R.drawable.robotblue);
                         textViewTitle.setTextColor(Color.parseColor("#03b9ff"));
                         textViewTitle.setText(R.string.title_finished);
                         textViewContent.setText(R.string.content_finished);
+                        textViewHidden.setText("");
                     }
-                    else if(message == "F") {
+                    else if(message.equals("F")) {
+                        myCountDownTimer = new MyCountDownTimer(60000, 20000);
+                        gesture3.setVisibility(View.GONE);
+                        progressBar3.setVisibility(View.GONE);
+                        checkBox1.setVisibility(View.GONE);
+                        checkBox2.setVisibility(View.GONE);
+                        checkBox3.setVisibility(View.GONE);
                         imageView.setImageResource(R.drawable.robotblue);
                         textViewTitle.setTextColor(Color.parseColor("#03b9ff"));
                         textViewTitle.setText(R.string.title_fail);
@@ -322,9 +319,10 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
                         checkBox3.setVisibility(View.GONE);
                         button.setText("Restart Calibration");
                         button.setVisibility(View.VISIBLE);
-
-                    }                }
-            }, 2000); // Millisecond 1000 = 1 sec*/
+                        textViewHidden.setText("");
+                    }
+                }
+            }, 2000); // Millisecond 1000 = 1 sec
         }
     }
 
@@ -406,21 +404,14 @@ public class step1Activity extends AppCompatActivity implements BluetoothSerialL
 
     @Override
     public void onBluetoothSerialRead(String message) {
-        // Print the incoming message on the terminal screen
+        // Print the incoming message in a hidden textview
         textViewHidden.setText(message);
 
-
-        //svTerminal.post(scrollTerminalToBottom);
     }
 
     @Override
     public void onBluetoothSerialWrite(String message) {
-        // Print the outgoing message on the terminal screen
-        //bluetoothSerial.write(message);
-        //textView.append(getString(R.string.terminal_message_template,
-        //bluetoothSerial.getLocalAdapterName(),
-        //message));
-        //svTerminal.post(scrollTerminalToBottom);
+
     }
 
     /* Implementation of BluetoothDeviceListDialog.OnDeviceSelectedListener */
